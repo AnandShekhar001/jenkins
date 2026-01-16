@@ -1,9 +1,29 @@
 pipeline {
     agent any
+
     stages {
-        stage('Hello') {
+
+        stage('Checkout') {
             steps {
-                echo 'Pipeline is working'
+                checkout scm
+            }
+        }
+
+        stage('Compile') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+
+        stage('Unit Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh 'mvn package'
             }
         }
     }
