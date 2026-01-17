@@ -26,4 +26,11 @@ pipeline {
             archiveArtifacts artifacts: 'target/*.war', fingerprint: true
         }
     }
+    post {
+    failure {
+        mail to: 'your-email@gmail.com',
+             subject: "Jenkins Build Failed: ${JOB_NAME}",
+             body: "Build failed.\n\nJob: ${JOB_NAME}\nBuild: ${BUILD_NUMBER}\nURL: ${BUILD_URL}"
+        }
+    }
 }
