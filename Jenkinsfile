@@ -2,13 +2,6 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Compile') {
             steps {
                 sh '/opt/maven/bin/mvn compile'
@@ -27,5 +20,10 @@ pipeline {
             }
         }
     }
-}
 
+    post {
+        success {
+            archiveArtifacts artifacts: 'target/*.war', fingerprint: true
+        }
+    }
+}
